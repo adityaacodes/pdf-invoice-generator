@@ -31,12 +31,34 @@ for filepath in filepaths:
 
     # Adding rows to the table
     for index, row in df.iterrows():
-        pdf.set_font(family="Times", size=10)
-        pdf.set_text_color(80, 80, 80)
+        pdf.set_font(family="Times", size=11)
+        pdf.set_text_color(30, 30, 30)
         pdf.cell(w=30, h=8, txt=str(row['product_id']), align="L", border=1)
         pdf.cell(w=70, h=8, txt=str(row['product_name']), align="L", border=1)
         pdf.cell(w=31, h=8, txt=str(row['amount_purchased']), align="L", border=1)
         pdf.cell(w=30, h=8, txt=str(row['price_per_unit']), align="L", border=1)
         pdf.cell(w=30, h=8, txt=str(row['total_price']), align="L", ln=1, border=1)
+
+    # Add total price cell
+    total_price = df['total_price'].sum()
+    pdf.set_font(family="Times", size=10)
+    pdf.set_text_color(80, 80, 80)
+    pdf.cell(w=30, h=8, txt="", align="L", border=1)
+    pdf.cell(w=70, h=8, txt="", align="L", border=1)
+    pdf.cell(w=31, h=8, txt="", align="L", border=1)
+    pdf.cell(w=30, h=8, txt="", align="L", border=1)
+    pdf.cell(w=30, h=8, txt=str(total_price), align="R", ln=1, border=1)
+
+    # Add total price sentence
+    pdf.set_font(family="Times", style="B", size=15)
+    pdf.set_text_color(0, 0, 0)
+    pdf.cell(w=0, h=20, txt=f"The total price is {total_price} euros.", align="L")
+
+    # To add company name and logo
+
+    # pdf.set_font(family="Times", style="B", size=15)
+    # pdf.set_text_color(0, 0, 0)
+    # pdf.cell(w=0, h=20, txt=f"The total price is {total_price} euros.", align="L")
+    # pdf.image("{image_url}")
 
     pdf.output(f"PDFs/{filename}.pdf")
